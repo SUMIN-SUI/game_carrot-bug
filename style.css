@@ -9,6 +9,14 @@ button {
   cursor: pointer;
 }
 
+ul {
+  padding-left: 0;
+}
+
+li {
+  list-style: none;
+}
+
 body {
   background-color: #000000;
 }
