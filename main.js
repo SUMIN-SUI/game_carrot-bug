@@ -1,32 +1,35 @@
+"use strict";
+
+const CARROT_SIZE = 80;
+
 const field = document.querySelector(".game_field");
+const fieldRect = field.getBoundingClientRect();
 
-const carrotNum = 10;
-const bugNum = 10;
-
-const X = 800;
-const START_Y = 296;
-const Y = 530;
-
-function makeCarrot() {
-  const carrots = document.createElement("ul");
-
-  for (let i = 0; i < carrotNum; i++) {
-    let randomX = Math.floor(Math.random() * X);
-    let randomY = Math.floor(Math.random() * Y);
-
-    if (randomY < START_Y) {
-      randomY = randomY + (Y - START_Y);
-    }
-    // console.log(randomX, randomY);
-
-    const carrot = document.createElement("li");
-    carrot.innerHTML = `<img src="./img/carrot.png" alt="당근">`;
-    carrot.getBoundingClientRect().top = randomY;
-    carrot.getBoundingClientRect().left = randomX;
-    carrots.appendChild(carrot);
-  }
-
-  field.appendChild(carrots);
+function initGame() {
+  addItem("carrot", 5, "img/carrot.png");
+  addItem("bug", 5, "img/bug.png");
 }
 
-makeCarrot();
+function addItem(className, count, imgPath) {
+  const x1 = 0;
+  const y1 = 0;
+  const x2 = fieldRect.width - CARROT_SIZE;
+  const y2 = fieldRect.height - CARROT_SIZE;
+  for (let i = 0; i < count; i++) {
+    const item = document.createElement("img");
+    item.setAttribute("class", className);
+    item.setAttribute("src", imgPath);
+    item.style.position = "absolute";
+    const x = randomNumber(x1, x2);
+    const y = randomNumber(y1, y2);
+    item.style.left = `${x}px`;
+    item.style.top = `${y}px`;
+    field.appendChild(item);
+  }
+}
+
+function randomNumber(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+initGame();
