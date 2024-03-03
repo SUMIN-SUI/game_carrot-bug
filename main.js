@@ -3,6 +3,7 @@
 const CARROT_SIZE = 80;
 const CARROT_COUNT = 5;
 const BUG_COUNT = 5;
+const GAME_DURATION_SEC = 5;
 
 const field = document.querySelector(".game_field");
 const fieldRect = field.getBoundingClientRect();
@@ -43,6 +44,24 @@ function showTimerAndScore() {
   gameScore.style.visibility = "visible";
 }
 
+function startGameTimer() {
+  let remainingTimeSec = GAME_DURATION_SEC;
+  updateTimeText(remainingTimeSec);
+  timer = setInterval(() => {
+    if (remainingTimeSec <= 0) {
+      clearInterval(timer);
+      return;
+    }
+    updateTimeText(--remainingTimeSec);
+  }, 1000);
+}
+
+function updateTimeText(time) {
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+  gameTimer.innerText = `${minutes}:${seconds}`;
+}
+
 function initGame() {
   field.innerHTML = " ";
   gameScore.innerText = CARROT_COUNT;
@@ -71,20 +90,3 @@ function addItem(className, count, imgPath) {
 function randomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
-
-//
-
-// function startGame() {
-//   if (startBtn.children[0].classList[1] === "fa-play") {
-//     initGame();
-//   } else if (startBtn.children[0].classList[1] === "fa-stop") {
-//     stopGame();
-//   }
-// }
-
-// function stopGame() {
-//   console.log("stop");
-//   showPopUp();
-// }
-
-// startBtn.addEventListener("click", startGame);
